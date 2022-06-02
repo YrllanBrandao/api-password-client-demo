@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="password, passwordAPi, api">
+    <meta name="description" content="This page demonstrates how to use the Password Generation API">
+    <title>Password  API - demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+       
+        .container{
+            width: 50vw;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+    </style>
+</head>
+  <body>
+    <h1 class="text-center">Password generator API - Demo </h1>
+    
+    
+    <div class="container">
+        <form  class="form-control" onsubmit="disableForm(event)">
+
+            <label for="user" class="label-form" required>Name</label>
+            <input type="text" name="user" placeholder="Freddy Krueger" autocomplete="off" class="form-control">
+            <label for="password" class="form-label">Password</label>
+            <!--<input type="password" name="password" placeholder="********" class="form-control">-->
+
+            <input type="text" id="password" placeholder="********" autocomplete="off" class="form-control">
+
+
+            <!--area genPassoword check-->
+            <hr>
+            <input type="checkbox" id="genPassword" style="cursor: pointer;" required>
+            <label for="genPassword">Gen secure password</label>
+            
+
+            
+            <hr>
+            <button type="submit" class="btn btn-success" >REGISTER</button>
+    
+        </form>
+
+        
+    </div>
+    <div class="alert alert-danger text-center" role="alert">
+        NOTE! The input type is as text for demonstrative purposes only
+      </div>
+
+        <hr>
+        <footer class="d-flex justify-content-center">
+             <a href="https://www.linkedin.com/in/yrllanbrandao/" class="nav-link" target="_blank"> Created by Yrllan Brandão</a>
+        </footer>
+     
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js" integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+
+        const passwordLenght = 16;
+        const checkbox = document.querySelector("#genPassword");
+        const passwordInput = document.querySelector("#password");
+       
+        const genPassword = ()=>{
+        
+
+        
+        
+        axios.get(`https://api-password-generator.herokuapp.com/password/${passwordLenght}`).then(response =>{
+
+            const {password} = response.data;
+            passwordInput.value = password
+        })
+
+        }
+
+        
+        checkbox.addEventListener("click", ()=>{
+
+            if(checkbox.checked)
+            {
+                genPassword()
+            }
+            else{
+                passwordInput.value = "";
+            }
+        })
+
+        const disableForm = (event)=>{
+
+            event.preventDefault();
+             
+            alert("DONE!")
+            
+        }
+        
+
+
+
+
+
+    </script>
+</body>
+</html>
